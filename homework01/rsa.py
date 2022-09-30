@@ -14,9 +14,9 @@ def is_prime(n: int) -> bool:
 def gcd(a: int, b: int) -> int:
     while a != 0 and b != 0:
         if a > b:
-            a = a % b
+            a %= b
         else:
-            b = b % a
+            b %= a
 
     return a + b
 
