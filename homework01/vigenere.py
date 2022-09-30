@@ -2,7 +2,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     ciphertext = ""
 
     d = {}
-    start, end = ord('a'), ord('z') + 1
+    start, end = ord("a"), ord("z") + 1
     for i in range(start, end):
         d[chr(i)] = i - start
 
