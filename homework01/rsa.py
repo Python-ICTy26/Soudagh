@@ -12,12 +12,13 @@ def is_prime(n: int) -> bool:
 
 
 def gcd(a: int, b: int) -> int:
-    while a != b:
+    while a != 0 and b != 0:
         if a > b:
-            a -= b
+            a = a % b
         else:
-            b -= a
-    return a
+            b = b % a
+
+    return a + b
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
