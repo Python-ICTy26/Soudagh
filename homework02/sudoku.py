@@ -161,7 +161,16 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
-    pass
+    if find_empty_positions(solution):
+        return False
+
+    for i in range(len(solution)):
+        row = get_row(solution, (i, 0))
+        col = get_col(solution, (0, i))
+        block = get_block(solution, (i // len(solution), i % len(solution)))
+        if len(row) != len(set(row)) or len(col) != len(set(col)) or len(block) != len(set(block)):
+            return False
+    return True
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
