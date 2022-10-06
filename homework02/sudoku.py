@@ -90,7 +90,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
             if solve(grid):
                 return grid
             else:
-                grid[pos[0]][pos[1]] = '.'
+                grid[pos[0]][pos[1]] = "."
     return []
 
 
