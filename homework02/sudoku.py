@@ -64,8 +64,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
         for j in range(len(grid[i])):
             if grid[i][j] == ".":
                 return i, j
-    return 0, 0
-
+    pass
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
     possible_values = set()
@@ -91,7 +90,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
             if solve(grid):
                 return grid
             else:
-                grid[pos[0]][pos[1]] = "."
+                grid[pos[0]][pos[1]] = '.'
     return []
 
 
@@ -135,7 +134,7 @@ def get_rand_row_col():
 
 
 if __name__ == "__main__":
-    for fname in ["puzzle1.txt", "puzzle2.txt", "puzzle3.txt"]:
+    for fname in ["homework02/puzzle1.txt", "homework02/puzzle2.txt", "homework02/puzzle3.txt"]:
         grid = read_sudoku(fname)
         display(grid)
         solution = solve(grid)
