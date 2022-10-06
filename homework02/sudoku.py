@@ -91,8 +91,8 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     while y % 3 != 0:
         y -= 1
 
-    for i in range(x, x + int(len(grid)**0.25) + 2):
-        for j in range(y, y + int(len(grid)**0.25) + 2):
+    for i in range(x, x + int(len(grid) ** 0.25) + 2):
+        for j in range(y, y + int(len(grid) ** 0.25) + 2):
             a.append(grid[i][j])
     return a
 
@@ -158,6 +158,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
                 grid[pos[0]][pos[1]] = '.'
     return []
 
+
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
@@ -171,6 +172,9 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
         if len(row) != len(set(row)) or len(col) != len(set(col)) or len(block) != len(set(block)):
             return False
     return True
+
+
+from random import randint
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
@@ -195,15 +199,35 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    pass
+
+    if N > 81:
+        N = 81
+
+    empty_pos = 81 - N
+    pos = get_rand_row_col()
+
+    grid = [['.'] * 9 for _ in range(9)]
+    grid[pos[0]][pos[1]] = str(randint(1, 9))
+    grid = solve(grid)
+
+    for i in range(empty_pos):
+        pos = get_rand_row_col()
+        while grid[pos[0]][pos[1]] == '.':
+            pos = get_rand_row_col()
+        grid[pos[0]][pos[1]] = '.'
+    return grid
 
 
-# if __name__ == "__main__":
-#     for fname in ["puzzle1.txt", "puzzle2.txt", "puzzle3.txt"]:
-#         grid = read_sudoku(fname)
-#         display(grid)
-#         solution = solve(grid)
-#         if not solution:
-#             print(f"Puzzle {fname} can't be solved")
-#         else:
-#             display(solution)
+def get_rand_row_col():
+    return randint(0, 8), randint(0, 8)
+
+
+if __name__ == "__main__":
+    for fname in ["puzzle1.txt", "puzzle2.txt", "puzzle3.txt"]:
+        grid = read_sudoku(fname)
+        display(grid)
+        solution = solve(grid)
+        if not solution:
+            print(f"Puzzle {fname} can't be solved")
+        else:
+            display(solution)
