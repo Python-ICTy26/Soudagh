@@ -32,7 +32,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
 
 
 def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
-    matrix = [values[i * len(values) // n:(i + 1) * len(values) // n] for i in range(n)]
+    matrix = [values[i * len(values) // n : (i + 1) * len(values) // n] for i in range(n)]
     return matrix
 
 
@@ -62,7 +62,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
 def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
     for i in range(len(grid)):
         for j in range(len(grid[i])):
-            if grid[i][j] == '.':
+            if grid[i][j] == ".":
                 return i, j
 
 
@@ -70,7 +70,11 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     possible_values = set()
     for i in range(1, 10):
         str_i = str(i)
-        if str_i not in get_block(grid, pos) and str_i not in get_row(grid, pos) and str_i not in get_col(grid, pos):
+        if (
+            str_i not in get_block(grid, pos)
+            and str_i not in get_row(grid, pos)
+            and str_i not in get_col(grid, pos)
+        ):
             possible_values.add(str_i)
     return possible_values
 
@@ -86,7 +90,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
             if solve(grid):
                 return grid
             else:
-                grid[pos[0]][pos[1]] = '.'
+                grid[pos[0]][pos[1]] = "."
     return []
 
 
@@ -113,15 +117,15 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     empty_pos = 81 - N
     pos = get_rand_row_col()
 
-    grid = [['.'] * 9 for _ in range(9)]
+    grid = [["."] * 9 for _ in range(9)]
     grid[pos[0]][pos[1]] = str(randint(1, 9))
     grid = solve(grid)
 
     for i in range(empty_pos):
         pos = get_rand_row_col()
-        while grid[pos[0]][pos[1]] == '.':
+        while grid[pos[0]][pos[1]] == ".":
             pos = get_rand_row_col()
-        grid[pos[0]][pos[1]] = '.'
+        grid[pos[0]][pos[1]] = "."
     return grid
 
 
