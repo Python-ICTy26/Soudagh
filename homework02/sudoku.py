@@ -33,7 +33,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
 
 
 def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
-    matrix = [values[i * len(values) // n: (i + 1) * len(values) // n] for i in range(n)]
+    matrix = [values[i * len(values) // n : (i + 1) * len(values) // n] for i in range(n)]
     return matrix
 
 
@@ -73,9 +73,9 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     for i in range(1, 10):
         str_i = str(i)
         if (
-                str_i not in get_block(grid, pos)
-                and str_i not in get_row(grid, pos)
-                and str_i not in get_col(grid, pos)
+            str_i not in get_block(grid, pos)
+            and str_i not in get_row(grid, pos)
+            and str_i not in get_col(grid, pos)
         ):
             possible_values.add(str_i)
     return possible_values
