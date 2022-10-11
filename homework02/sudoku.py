@@ -145,8 +145,7 @@ def run_solve(pazzle: str) -> None:
     solve(grid)
     solution = solve(grid)
     if not solution:
-        print(
-            f"Puzzle {pazzle} can't be solved.")
+        print(f"Puzzle {pazzle} can't be solved.")
     else:
         log.write(f"Solved pazzle")
     end = time.time()
