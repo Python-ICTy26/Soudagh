@@ -1,4 +1,5 @@
 import pathlib
+import time
 import typing as tp
 
 T = tp.TypeVar("T")
@@ -32,7 +33,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
 
 
 def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
-    matrix = [values[i * len(values) // n : (i + 1) * len(values) // n] for i in range(n)]
+    matrix = [values[i * len(values) // n: (i + 1) * len(values) // n] for i in range(n)]
     return matrix
 
 
@@ -72,9 +73,9 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     for i in range(1, 10):
         str_i = str(i)
         if (
-            str_i not in get_block(grid, pos)
-            and str_i not in get_row(grid, pos)
-            and str_i not in get_col(grid, pos)
+                str_i not in get_block(grid, pos)
+                and str_i not in get_row(grid, pos)
+                and str_i not in get_col(grid, pos)
         ):
             possible_values.add(str_i)
     return possible_values
@@ -134,8 +135,26 @@ def get_rand_row_col():
     return randint(0, 8), randint(0, 8)
 
 
+import multiprocessing
+
+
+def run_solve(pazzle: str) -> None:
+    grid = create_grid(pazzle)
+    log = open("log.txt", "w")
+    start = time.time()
+    solve(grid)
+    solution = solve(grid)
+    if not solution:
+        print(
+            f"Puzzle {pazzle} can't be solved.")
+    else:
+        log.write(f"Solved pazzle")
+    end = time.time()
+    print(f"{pazzle}: {end - start}")
+
+
 if __name__ == "__main__":
-    for fname in ["homework02/puzzle1.txt", "homework02/puzzle2.txt", "homework02/puzzle3.txt"]:
+    for fname in ["puzzle1.txt", "puzzle2.txt", "puzzle3.txt"]:
         grid = read_sudoku(fname)
         display(grid)
         solution = solve(grid)
@@ -143,3 +162,12 @@ if __name__ == "__main__":
             print(f"Puzzle {fname} can't be solved")
         else:
             display(solution)
+
+    fhard_pazzles = open("hard_puzzles.txt", "r")
+    count = 1
+    for pazzle in fhard_pazzles:
+        log = open("log.txt", "w")
+        p = multiprocessing.Process(target=run_solve, args=(pazzle,))
+        p.start()
+        log.write(f"{count}/{95}")
+        count += 1
