@@ -67,7 +67,7 @@ class GameOfLife:
 
     @property
     def is_max_generations_exceeded(self) -> bool:
-        if self is not None and self.generations > self.max_generations:
+        if self.generations > self.max_generations:
             return False
         return True
 
@@ -81,7 +81,7 @@ class GameOfLife:
     @staticmethod
     def from_file(filename: pathlib.Path) -> "GameOfLife":
         f = open(filename, "r")
-        grid: typing.List[list[int]] = []
+        grid: typing.List[typing.List[int]] = []
         for i, line in enumerate(f):
             grid.append([])
             for c in line[:-1]:
