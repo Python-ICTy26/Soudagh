@@ -71,10 +71,7 @@ class GameOfLife:
                     self.screen,
                     color,
                     pygame.Rect(
-                        j * self.cell_size,
-                        i * self.cell_size,
-                        self.cell_size,
-                        self.cell_size
+                        j * self.cell_size, i * self.cell_size, self.cell_size, self.cell_size
                     ),
                 )
         return None
