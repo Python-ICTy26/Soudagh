@@ -1,5 +1,6 @@
 import pathlib
 import random
+import typing
 import typing as tp
 
 import pygame
@@ -66,7 +67,7 @@ class GameOfLife:
 
     @property
     def is_max_generations_exceeded(self) -> bool:
-        if self.generations > self.max_generations:
+        if self is not None and self.generations > self.max_generations:
             return False
         return True
 
@@ -80,7 +81,7 @@ class GameOfLife:
     @staticmethod
     def from_file(filename: pathlib.Path) -> "GameOfLife":
         f = open(filename, "r")
-        grid: list[list[int]] = []
+        grid: typing.List[list[int]] = []
         for i, line in enumerate(f):
             grid.append([])
             for c in line[:-1]:
