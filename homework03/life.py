@@ -67,7 +67,7 @@ class GameOfLife:
 
     @property
     def is_max_generations_exceeded(self) -> bool:
-        if self.generations > self.max_generations:
+        if self.max_generations == float("inf") or self.generations > self.max_generations:
             return False
         return True
 
