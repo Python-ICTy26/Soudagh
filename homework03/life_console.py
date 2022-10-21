@@ -11,7 +11,7 @@ class Console(UI):
 
     def draw_borders(self, screen) -> None:
         curses.resizeterm(self.life.rows + 2, self.life.cols + 2)
-        screen.border('|', '|', '-', '-', '+', '+', '+', '+')
+        screen.border("|", "|", "-", "-", "+", "+", "+", "+")
 
     def draw_grid(self, screen) -> None:
         grid = self.life.curr_generation

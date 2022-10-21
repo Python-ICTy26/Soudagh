@@ -29,11 +29,18 @@ class GUI(UI):
         grid = self.life.curr_generation
         for i in range(len(grid)):
             for j in range(len(grid[i])):
-                color = pygame.Color('white')
+                color = pygame.Color("white")
                 if grid[i][j] == 1:
-                    color = pygame.Color('green')
-                pygame.draw.rect(self.screen, color,
-                                 pygame.Rect(j * self.cell_size, i * self.cell_size, self.cell_size, self.cell_size))
+                    color = pygame.Color("green")
+                pygame.draw.rect(
+                    self.screen,
+                    color,
+                    pygame.Rect(
+                        j * self.cell_size,
+                        i * self.cell_size,
+                        self.cell_size, self.cell_size
+                    ),
+                )
 
     def run(self) -> None:
         pygame.init()
@@ -59,7 +66,9 @@ class GUI(UI):
                     if event.button == 1:
                         x, y = pygame.mouse.get_pos()
                         cell_pos = (x // self.cell_size, y // self.cell_size)
-                        self.life.curr_generation[cell_pos[1]][cell_pos[0]] = abs(self.life.curr_generation[cell_pos[1]][cell_pos[0]] - 1)
+                        self.life.curr_generation[cell_pos[1]][cell_pos[0]] = abs(
+                            self.life.curr_generation[cell_pos[1]][cell_pos[0]] - 1
+                        )
                         self.draw_grid()
                         self.draw_lines()
                         pygame.display.flip()
@@ -74,5 +83,3 @@ class GUI(UI):
                     break
                 clock.tick(self.speed)
         pygame.quit()
-
-

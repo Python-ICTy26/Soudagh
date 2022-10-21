@@ -12,10 +12,10 @@ Grid = tp.List[Cells]
 
 class GameOfLife:
     def __init__(
-            self,
-            size: tp.Tuple[int, int],
-            randomize: bool = True,
-            max_generations: tp.Optional[float] = float("inf"),
+        self,
+        size: tp.Tuple[int, int],
+        randomize: bool = True,
+        max_generations: tp.Optional[float] = float("inf"),
     ) -> None:
         self.rows, self.cols = size
         self.prev_generation = self.create_grid()
@@ -79,7 +79,7 @@ class GameOfLife:
 
     @staticmethod
     def from_file(filename: pathlib.Path) -> "GameOfLife":
-        f = open(filename, 'r')
+        f = open(filename, "r")
         grid = []
         for i, line in enumerate(f):
             grid.append([])
@@ -91,8 +91,8 @@ class GameOfLife:
         return game_from_file
 
     def save(self, filename: pathlib.Path) -> None:
-        f = open(filename, 'w')
+        f = open(filename, "w")
         for i in self.curr_generation:
             for c in i:
                 f.write(str(c))
-            f.write('\n')
+            f.write("\n")
