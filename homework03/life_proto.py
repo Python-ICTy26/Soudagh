@@ -52,12 +52,10 @@ class GameOfLife:
         pygame.quit()
 
     def create_grid(self, randomize: bool = False) -> Grid:
+        grid = [[0] * self.cell_width for _ in range(self.cell_height)]
         if randomize:
-            self.grid = [[random.choice([0, 1]) for _ in range(self.cell_width)] for _ in range(self.cell_height)]
-            return self.grid
-        else:
-            self.grid = [[0] * self.cell_width for _ in range(self.cell_height)]
-            return self.grid
+            grid = [[random.choice([0, 1]) for _ in range(self.cell_width)] for _ in range(self.cell_height)]
+        return grid
 
     def draw_grid(self) -> None:
         grid = self.grid

@@ -12,10 +12,10 @@ Grid = tp.List[Cells]
 
 class GameOfLife:
     def __init__(
-        self,
-        size: tp.Tuple[int, int],
-        randomize: bool = True,
-        max_generations: tp.Optional[float] = float("inf"),
+            self,
+            size: tp.Tuple[int, int],
+            randomize: bool = True,
+            max_generations: tp.Optional[float] = float("inf"),
     ) -> None:
         self.rows, self.cols = size
         self.prev_generation = self.create_grid()
@@ -24,12 +24,11 @@ class GameOfLife:
         self.generations = 1
 
     def create_grid(self, randomize: bool = False) -> Grid:
+        grid = [[0] * self.cols for _ in range(self.rows)]
         if randomize:
-            self.grid = [[random.choice([0, 1]) for _ in range(self.cols)] for _ in range(self.rows)]
-            return self.grid
-        else:
-            self.grid = [[0] * self.cols for _ in range(self.rows)]
-            return self.grid
+            grid = [[random.choice([0, 1]) for _ in range(self.cols)] for _ in range(self.rows)]
+
+        return grid
 
     def get_neighbours(self, cell: Cell) -> Cells:
         cells = []
@@ -49,15 +48,14 @@ class GameOfLife:
         return cells
 
     def get_next_generation(self) -> Grid:
-        grid = self.grid
         new_grid = self.create_grid(False)
 
-        for i in range(len(grid)):
-            for j in range(len(grid[i])):
+        for i in range(self.rows):
+            for j in range(self.cols):
                 neighbours = self.get_neighbours((i, j)).count(1)
-                if grid[i][j] == 0 and neighbours == 3:
+                if self.curr_generation[i][j] == 0 and neighbours == 3:
                     new_grid[i][j] = 1
-                elif grid[i][j] == 1 and (neighbours == 2 or neighbours == 3):
+                elif self.curr_generation[i][j] == 1 and (neighbours == 2 or neighbours == 3):
                     new_grid[i][j] = 1
         return new_grid
 
@@ -98,4 +96,3 @@ class GameOfLife:
             for c in i:
                 f.write(str(c))
             f.write('\n')
-

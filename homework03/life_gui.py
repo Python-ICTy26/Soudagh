@@ -65,10 +65,14 @@ class GUI(UI):
                         pygame.display.flip()
 
             if not paused:
-                self.draw_lines()
                 self.draw_grid()
+                self.draw_lines()
+                self.life.step()
                 pygame.display.flip()
+
                 if not (self.life.is_max_generations_exceeded and self.life.is_changing):
                     break
                 clock.tick(self.speed)
         pygame.quit()
+
+
