@@ -42,7 +42,7 @@ def repo_create(workdir: tp.Union[str, pathlib.Path]) -> pathlib.Path:
     except:
         gitdir = ".git"
 
-    dir = workdir / gitdir
+    dir = pathlib.Path(workdir) / gitdir
     dir.mkdir()
 
     (dir / "refs").mkdir()
