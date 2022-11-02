@@ -11,7 +11,7 @@ def repo_find(workdir: tp.Union[str, pathlib.Path] = ".") -> pathlib.Path:
 def repo_create(workdir: tp.Union[str, pathlib.Path]) -> pathlib.Path:
     try:
         os.chdir(workdir)
-        gitdir = workdir / ".git"
+        gitdir = workdir / pathlib.Path(".git")
 
         os.mkdir(gitdir)
 
