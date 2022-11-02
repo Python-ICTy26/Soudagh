@@ -6,7 +6,6 @@ from unittest.mock import patch
 
 import pyvcs
 from pyfakefs.fake_filesystem_unittest import TestCase
-
 from pyvcs.index import read_index, update_index
 from pyvcs.repo import repo_create
 from pyvcs.tree import commit_tree, write_tree

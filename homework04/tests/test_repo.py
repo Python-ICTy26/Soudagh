@@ -4,6 +4,7 @@ import pathlib
 from pyfakefs.fake_filesystem_unittest import TestCase
 from pyvcs import repo
 
+
 class RepoCreateTestCase(TestCase):
     def setUp(self):
         os.environ["GIT_DIR"] = ".git"
