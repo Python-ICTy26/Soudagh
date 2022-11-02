@@ -5,7 +5,7 @@ import typing as tp
 
 def repo_find(workdir: tp.Union[str, pathlib.Path] = ".") -> pathlib.Path:
     try:
-        gitdir = os.environ['GIT_DIR'] if os.environ['GIT_DIR'] else ".git"
+        gitdir = os.environ["GIT_DIR"] if os.environ["GIT_DIR"] else ".git"
     except:
         gitdir = ".git"
 
@@ -38,7 +38,7 @@ def repo_create(workdir: tp.Union[str, pathlib.Path]) -> pathlib.Path:
         workdir = pathlib.Path(workdir)
 
     try:
-        gitdir = os.environ['GIT_DIR'] if os.environ['GIT_DIR'] else ".git"
+        gitdir = os.environ["GIT_DIR"] if os.environ["GIT_DIR"] else ".git"
     except:
         gitdir = ".git"
 
