@@ -4,38 +4,59 @@ import typing as tp
 
 
 def repo_find(workdir: tp.Union[str, pathlib.Path] = ".") -> pathlib.Path:
-    # PUT YOUR CODE HERE
-    ...
+    try:
+        gitdir = os.environ['GIT_DIR'] if os.environ['GIT_DIR'] else ".git"
+    except:
+        gitdir = ".git"
+
+    resdir = ""
+    workdir = pathlib.Path(workdir)
+
+    if len(workdir.parents) == 0:
+        if not pathlib.Path.exists(workdir / gitdir):
+            raise Exception("Not a git repository")
+        return workdir.absolute() / gitdir
+    elif pathlib.Path.exists(workdir / gitdir):
+        return workdir.absolute() / gitdir
+    else:
+        for path in workdir.parents:
+            if gitdir in str(path) or pathlib.Path.exists(path / gitdir):
+                resdir = path
+    if not resdir:
+        raise Exception("Not a git repository")
+    if gitdir in str(resdir):
+        return resdir
+    else:
+        return resdir / gitdir
 
 
 def repo_create(workdir: tp.Union[str, pathlib.Path]) -> pathlib.Path:
     try:
-        os.chdir(workdir)
-        gitdir = workdir / pathlib.Path(".git")
+        if workdir.is_file():
+            raise Exception(f"{workdir} is not a directory")
+    except AttributeError:
+        workdir = pathlib.Path(workdir)
 
-        os.mkdir(gitdir)
+    try:
+        gitdir = os.environ['GIT_DIR'] if os.environ['GIT_DIR'] else ".git"
+    except:
+        gitdir = ".git"
 
-        os.mkdir("objects")
-        os.makedirs(gitdir / "refs" / "heads")
-        os.mkdir(gitdir / "refs" / "tags")
-        os.chdir(gitdir)
+    dir = workdir / gitdir
+    dir.mkdir()
 
-        head = open("HEAD", "w")
-        head.write("ref: refs/heads/master\n")
-        head.close()
+    (dir / "refs").mkdir()
+    (dir / "refs/heads").mkdir()
+    (dir / "refs/tags").mkdir()
+    (dir / "objects").mkdir()
 
-        config = open("config", "a")
-        config.write(
-            "[core]\n\trepositoryformatversion = 0\n\tfilemode = "
-            "true\n\tbare = false\n\tlogallrefupdates = "
-            "false\n"
-        )
-        config.close()
+    (dir / "HEAD").write_text("ref: refs/heads/master\n")
+    (dir / "config").write_text(
+        "[core]\n\trepositoryformatversion = 0\n\tfilemode = true\n\tbare = "
+        "false\n\tlogallrefupdates = "
+        "false\n"
+    )
 
-        description = open("description", "a")
-        description.write("Unnamed pyvcs repository")
-        description.close()
+    (dir / "description").write_text("Unnamed pyvcs repository.\n")
 
-    except NotADirectoryError:
-        raise Exception(f"{workdir} is not a directory")
-    return gitdir
+    return dir
