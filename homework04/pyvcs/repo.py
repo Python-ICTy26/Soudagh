@@ -9,7 +9,7 @@ def repo_find(workdir: tp.Union[str, pathlib.Path] = ".") -> pathlib.Path:
     except:
         gitdir = ".git"
 
-    resdir = ""
+    resdir = pathlib.Path("")
     workdir = pathlib.Path(workdir)
 
     if len(workdir.parents) == 0:
@@ -32,7 +32,7 @@ def repo_find(workdir: tp.Union[str, pathlib.Path] = ".") -> pathlib.Path:
 
 def repo_create(workdir: tp.Union[str, pathlib.Path]) -> pathlib.Path:
     try:
-        if workdir.is_file():
+        if pathlib.Path(workdir).is_file():
             raise Exception(f"{workdir} is not a directory")
     except AttributeError:
         workdir = pathlib.Path(workdir)
