@@ -20,13 +20,16 @@ def repo_create(workdir: tp.Union[str, pathlib.Path]) -> pathlib.Path:
         os.mkdir(gitdir / "refs" / "tags")
         os.chdir(gitdir)
 
-        head = open("HEAD", 'w')
+        head = open("HEAD", "w")
         head.write("ref: refs/heads/master\n")
         head.close()
 
         config = open("config", "a")
-        config.write("[core]\n\trepositoryformatversion = 0\n\tfilemode = true\n\tbare = false\n\tlogallrefupdates = "
-                     "false\n")
+        config.write(
+            "[core]\n\trepositoryformatversion = 0\n\tfilemode = "
+            "true\n\tbare = false\n\tlogallrefupdates = "
+                     "false\n"
+        )
         config.close()
 
         description = open("description", "a")
