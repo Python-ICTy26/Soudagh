@@ -28,7 +28,7 @@ def repo_create(workdir: tp.Union[str, pathlib.Path]) -> pathlib.Path:
         config.write(
             "[core]\n\trepositoryformatversion = 0\n\tfilemode = "
             "true\n\tbare = false\n\tlogallrefupdates = "
-                     "false\n"
+            "false\n"
         )
         config.close()
 
