@@ -3,9 +3,9 @@ import stat
 import unittest
 from unittest.mock import patch
 
+import pyvcs
 from pyfakefs.fake_filesystem_unittest import TestCase
 
-import pyvcs
 from pyvcs.porcelain import add, checkout, commit
 from pyvcs.repo import repo_create
 

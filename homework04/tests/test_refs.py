@@ -1,8 +1,8 @@
 import unittest
 
+import pyvcs
 from pyfakefs.fake_filesystem_unittest import TestCase
 
-import pyvcs
 from pyvcs.refs import get_ref, is_detached, ref_resolve, resolve_head, update_ref
 from pyvcs.repo import repo_create
 

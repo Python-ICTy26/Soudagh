@@ -5,9 +5,9 @@ import unittest
 import zlib
 from unittest.mock import patch
 
+import pyvcs
 from pyfakefs.fake_filesystem_unittest import TestCase
 
-import pyvcs
 from pyvcs import index, objects, porcelain, repo, tree
 
 
