@@ -38,7 +38,7 @@ class GitIndexEntry(tp.NamedTuple):
             self.size,
             self.sha1,
             self.flags,
-            self.name.encode()
+            self.name.encode(),
         )
 
         return struct.pack(f">10i20sh{len(self.name)}s3x", *values)
@@ -123,7 +123,7 @@ def update_index(gitdir: pathlib.Path, paths: tp.List[pathlib.Path], write: bool
                 size=stat.st_size,
                 sha1=bytes.fromhex(sha1),
                 flags=7,
-                name=str(file).replace("\\", "/")
+                name=str(file).replace("\\", "/"),
             )
         )
     files = sorted(files, key=lambda x: x.name)
