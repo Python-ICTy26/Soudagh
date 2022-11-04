@@ -54,7 +54,7 @@ class GitIndexEntry(tp.NamedTuple):
 
 
 def read_index(gitdir: pathlib.Path) -> tp.List[GitIndexEntry]:
-    index = []
+    index: tp.List[GitIndexEntry] = []
     path_index = gitdir / "index"
 
     try:
@@ -85,7 +85,7 @@ def write_index(gitdir: pathlib.Path, entries: tp.List[GitIndexEntry]) -> None:
         for file in entries:
             f.write(file.pack())
             hash += file.pack()
-        hash = hashlib.sha1(hash).hexdigest()
+        hash = str(hashlib.sha1(hash).hexdigest())
         f.write(struct.pack(f">{len(bytearray.fromhex(hash))}s", bytearray.fromhex(hash)))
 
 
