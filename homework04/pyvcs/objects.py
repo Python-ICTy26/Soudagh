@@ -28,7 +28,7 @@ def hash_object(data: bytes, fmt: str, write: bool = False) -> str:
 
 
 def resolve_object(obj_name: str, gitdir: pathlib.Path) -> tp.List[str]:
-    objs = []
+    objs: tp.List[str] = []
 
     if len(obj_name) > 40 or len(obj_name) < 4:
         raise Exception(f"Not a valid object name {obj_name}")

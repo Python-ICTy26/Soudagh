@@ -24,8 +24,8 @@ def checkout(gitdir: pathlib.Path, obj_name: str) -> None:
     head = gitdir / "refs" / "heads" / obj_name
 
     if head.exists():
-        with head.open(mode="r") as f1:
-            obj_name = f1.read()
+        with head.open(mode="r") as f:
+            obj_name = f.read()
 
     index = read_index(gitdir)
 
@@ -39,16 +39,16 @@ def checkout(gitdir: pathlib.Path, obj_name: str) -> None:
 
     obj_path = gitdir / "objects" / obj_name[:2] / obj_name[2:]
 
-    with obj_path.open(mode="rb") as f2:
-        commit_content = f2.read()
+    with obj_path.open(mode="rb") as f1:
+        commit_content = f1.read()
 
     sha = commit_parse(commit_content).decode()
 
-    for f2 in find_tree_files(sha, gitdir):
-        if "/" in f2[0]:
-            dir_name = f2[0][: f2[0].find("/")]
+    for file in find_tree_files(sha, gitdir):
+        if "/" in file[0]:
+            dir_name = file[0][: file[0].find("/")]
             pathlib.Path(dir_name).absolute().mkdir()
 
-        with open(f2[0], "w") as f3:
-            header, content = read_object(f3[1], gitdir)
-            f3.write(content.decode())
+        with open(file[0], "w") as f2:
+            header, content = read_object(file[1], gitdir)
+            f2.write(content.decode())
