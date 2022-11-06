@@ -10,13 +10,13 @@ def update_ref(gitdir: pathlib.Path, ref: tp.Union[str, pathlib.Path], new_value
 
 
 def symbolic_ref(gitdir: pathlib.Path, name: str, ref: str) -> None:
-    if ref_resolve(ref) is None:
+    if ref_resolve(gitdir, ref) is None:
         return None
     with (gitdir / name).open("w") as f:
         f.write(f"ref: {ref}")
 
 
-def ref_resolve(gitdir: pathlib.Path, refname: str) -> str:
+def ref_resolve(gitdir: pathlib.Path, refname: str) -> str | None:
     if refname == "HEAD":
         refname = get_ref(gitdir)
     ref_path = gitdir / refname
