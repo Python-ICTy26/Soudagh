@@ -36,7 +36,7 @@ def resolve_object(obj_name: str, gitdir: pathlib.Path) -> tp.List[str]:
     blob_path = gitdir / "objects" / obj_name[:2]
 
     for obj in blob_path.iterdir():
-        objs.append(find_object(obj_name, obj))
+        objs.append(str(find_object(obj_name, obj)))
 
     if not objs or objs[0] is None:
         raise Exception(f"Not a valid object name {obj_name}")
@@ -103,7 +103,7 @@ def find_tree_files(tree_sha: str, gitdir: pathlib.Path) -> tp.List[tp.Tuple[str
             tree = find_tree_files(f[2], gitdir)
             for blob in tree:
                 name = f[1] + "/" + blob[0]
-            result.append((name, blob[1]))
+                result.append((name, blob[1]))
         else:
             result.append((f[1], f[2]))
     return result
