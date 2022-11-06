@@ -43,12 +43,11 @@ def checkout(gitdir: pathlib.Path, obj_name: str) -> None:
         commit_content = f1.read()
 
     sha = commit_parse(commit_content).decode()
-
-    for file in find_tree_files(sha, gitdir):
-        if "/" in file[0]:
-            dir_name = file[0][: file[0].find("/")]
+    for file1 in find_tree_files(sha, gitdir):
+        if "/" in file1[0]:
+            dir_name = file1[0][: file1[0].find("/")]
             pathlib.Path(dir_name).absolute().mkdir()
 
-        with open(file[0], "w") as f2:
-            header, content = read_object(file[1], gitdir)
+        with open(file1[0], "w") as f2:
+            header, content = read_object(file1[1], gitdir)
             f2.write(content.decode())
