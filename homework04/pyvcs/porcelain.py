@@ -15,8 +15,9 @@ def add(gitdir: pathlib.Path, paths: tp.List[pathlib.Path]) -> None:
 
 def commit(gitdir: pathlib.Path, message: str, author: tp.Optional[str] = None) -> str:
     index = read_index(gitdir)
-    return commit_tree(gitdir=gitdir, tree=write_tree(gitdir, index), message=message, author=author
-                       )
+    return commit_tree(
+        gitdir=gitdir, tree=write_tree(gitdir, index), message=message, author=author
+    )
 
 
 def checkout(gitdir: pathlib.Path, obj_name: str) -> None:

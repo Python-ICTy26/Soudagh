@@ -59,7 +59,7 @@ def read_object(sha: str, gitdir: pathlib.Path) -> tp.Tuple[str, bytes]:
     srez = blob_contents.find(b"\x00")
     fmt = blob_contents[:srez]
     fmt = fmt[: fmt.find(b" ")]
-    data = blob_contents[(srez + 1):]
+    data = blob_contents[(srez + 1) :]
 
     return fmt.decode(), data
 
