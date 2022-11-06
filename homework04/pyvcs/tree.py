@@ -30,11 +30,11 @@ def write_tree(gitdir: pathlib.Path, index: tp.List[GitIndexEntry], dirname: str
 
 
 def commit_tree(
-        gitdir: pathlib.Path,
-        tree: str,
-        message: str,
-        parent: tp.Optional[str] = None,
-        author: tp.Optional[str] = None,
+    gitdir: pathlib.Path,
+    tree: str,
+    message: str,
+    parent: tp.Optional[str] = None,
+    author: tp.Optional[str] = None,
 ) -> str:
     if "GIT_DIR" not in os.environ:
         os.environ["GIT_DIR"] = ".git"

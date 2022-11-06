@@ -15,12 +15,8 @@ def add(gitdir: pathlib.Path, paths: tp.List[pathlib.Path]) -> None:
 
 def commit(gitdir: pathlib.Path, message: str, author: tp.Optional[str] = None) -> str:
     index = read_index(gitdir)
-    return commit_tree(
-        gitdir=gitdir,
-        tree=write_tree(gitdir, index),
-        message=message,
-        author=author
-    )
+    return commit_tree(gitdir=gitdir, tree=write_tree(gitdir, index), message=message, author=author
+                       )
 
 
 def checkout(gitdir: pathlib.Path, obj_name: str) -> None:
@@ -49,7 +45,7 @@ def checkout(gitdir: pathlib.Path, obj_name: str) -> None:
 
     for f2 in find_tree_files(sha, gitdir):
         if "/" in f2[0]:
-            dir_name = f2[0][:f2[0].find("/")]
+            dir_name = f2[0][: f2[0].find("/")]
             pathlib.Path(dir_name).absolute().mkdir()
 
         with open(f2[0], "w") as f3:
