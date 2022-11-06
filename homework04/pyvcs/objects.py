@@ -38,7 +38,7 @@ def resolve_object(obj_name: str, gitdir: pathlib.Path) -> tp.List[str]:
     for obj in blob_path.iterdir():
         objs.append(str(find_object(obj_name, obj)))
 
-    if not objs or objs[0] is None:
+    if not objs[0] is "None":
         raise Exception(f"Not a valid object name {obj_name}")
 
     return objs
