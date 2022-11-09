@@ -1,5 +1,6 @@
 import os
 import pathlib
+import shutil
 import typing as tp
 
 from pyvcs.index import read_index, update_index
@@ -9,15 +10,44 @@ from pyvcs.tree import commit_tree, write_tree
 
 
 def add(gitdir: pathlib.Path, paths: tp.List[pathlib.Path]) -> None:
-    # PUT YOUR CODE HERE
-    ...
+    update_index(gitdir, paths)
 
 
 def commit(gitdir: pathlib.Path, message: str, author: tp.Optional[str] = None) -> str:
-    # PUT YOUR CODE HERE
-    ...
+    index = read_index(gitdir)
+    return commit_tree(
+        gitdir=gitdir, tree=write_tree(gitdir, index), message=message, author=author
+    )
 
 
 def checkout(gitdir: pathlib.Path, obj_name: str) -> None:
-    # PUT YOUR CODE HERE
-    ...
+    head = gitdir / "refs" / "heads" / obj_name
+
+    if head.exists():
+        with head.open(mode="r") as f:
+            obj_name = f.read()
+
+    index = read_index(gitdir)
+
+    for file in index:
+        if pathlib.Path(file.name).is_file():
+            if "/" in file.name:
+                shutil.rmtree(file.name[: file.name.find("/")])
+            else:
+                os.chmod(file.name, 0o777)
+                os.remove(file.name)
+
+    obj_path = gitdir / "objects" / obj_name[:2] / obj_name[2:]
+
+    with obj_path.open(mode="rb") as f1:
+        commit_content = f1.read()
+
+    sha = commit_parse(commit_content).decode()
+    for file1 in find_tree_files(sha, gitdir):
+        if "/" in file1[0]:
+            dir_name = file1[0][: file1[0].find("/")]
+            pathlib.Path(dir_name).absolute().mkdir()
+
+        with open(file1[0], "w") as f2:
+            header, content = read_object(file1[1], gitdir)
+            f2.write(content.decode())
