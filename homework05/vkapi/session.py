@@ -33,15 +33,11 @@ class Session:
     def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
         return self.check(url, "post")
 
-    def check(self, url, method):
+    def check(self, url: str, method: str):
         count = 0
         while True:
             try:
-                if method == "post":
-                    response = requests.post(self.base_url + url, timeout=self.timeout)
-                else:
-                    response = requests.get(self.base_url + url, timeout=self.timeout)
-
+                response = getattr(requests, method)(self.base_url + url, timeout=self.timeout)
                 response.raise_for_status()
 
                 return response
