@@ -4,35 +4,58 @@ import typing as tp
 from string import Template
 
 import pandas as pd
+import requests
 from pandas import json_normalize
 
-from vkapi import config, session
-from vkapi.exceptions import APIError
+from homework05.vkapi import config, session
+from homework05.vkapi.config import VK_CONFIG
+from homework05.vkapi.exceptions import APIError
+
+domainVK = VK_CONFIG["domain"]
+access_token = VK_CONFIG["access_token"]
+v = VK_CONFIG["version"]
 
 
 def get_posts_2500(
-    owner_id: str = "",
-    domain: str = "",
-    offset: int = 0,
-    count: int = 10,
-    max_count: int = 2500,
-    filter: str = "owner",
-    extended: int = 0,
-    fields: tp.Optional[tp.List[str]] = None,
+        owner_id: str = "",
+        domain: str = "",
+        offset: int = 0,
+        count: int = 10,
+        max_count: int = 2500,
+        filter: str = "owner",
+        extended: int = 0,
+        fields: tp.Optional[tp.List[str]] = None,
 ) -> tp.Dict[str, tp.Any]:
-    pass
+    code = '''return API.wall.get({
+                '"owner_id": "owner_id"',
+                '"domain": "domain"',
+                '"offset": offset',
+                '"count": "1"',
+                '"filter": "filter"',
+                '"extended": extended',
+                '"fields": "fields"',
+                '"v": "v"'
+                });'''
+
+    post = requests.post(url=f"{domainVK}/execute", data={
+        "code": code,
+        "access_token": f"{access_token}",
+        "v": f"{v}"
+    })
+    response = post.json()["response"]["items"]
+    return response
 
 
 def get_wall_execute(
-    owner_id: str = "",
-    domain: str = "",
-    offset: int = 0,
-    count: int = 10,
-    max_count: int = 2500,
-    filter: str = "owner",
-    extended: int = 0,
-    fields: tp.Optional[tp.List[str]] = None,
-    progress=None,
+        owner_id: str = "",
+        domain: str = "",
+        offset: int = 0,
+        count: int = 10,
+        max_count: int = 2500,
+        filter: str = "owner",
+        extended: int = 0,
+        fields: tp.Optional[tp.List[str]] = None,
+        progress=None,
 ) -> pd.DataFrame:
     """
     Возвращает список записей со стены пользователя или сообщества.
@@ -49,4 +72,12 @@ def get_wall_execute(
     :param fields: Список дополнительных полей для профилей и сообществ, которые необходимо вернуть.
     :param progress: Callback для отображения прогресса.
     """
-    pass
+
+    offset_count = (count / 2500).__ceil__()
+    response = []
+    for i in range(offset_count):
+        response += (get_posts_2500(owner_id, domain, i * 2500, max_count, filter, extended, fields, progress))
+        if i % 2 == 0:
+            time.sleep(1)
+
+    return json_normalize(response)
