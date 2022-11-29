@@ -7,13 +7,12 @@ import pandas as pd
 import requests
 from pandas import json_normalize
 
-from homework05.vkapi import config, session
-from homework05.vkapi.config import VK_CONFIG
-from homework05.vkapi.exceptions import APIError
+from vkapi import config, session
+from vkapi.exceptions import APIError
 
-domainVK = VK_CONFIG["domain"]
-access_token = VK_CONFIG["access_token"]
-v = VK_CONFIG["version"]
+domainVK = config.VK_CONFIG["domain"]
+access_token = config.VK_CONFIG["access_token"]
+v = config.VK_CONFIG["version"]
 
 
 def get_posts_2500(
@@ -42,8 +41,7 @@ def get_posts_2500(
         "access_token": f"{access_token}",
         "v": f"{v}"
     })
-    response = post.json()["response"]["items"]
-    return response
+    return post.json()["response"]["items"]
 
 
 def get_wall_execute(

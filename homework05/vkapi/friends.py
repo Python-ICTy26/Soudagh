@@ -1,14 +1,14 @@
 import dataclasses
-import math
 import time
 import typing as tp
 
 import requests
 
-from homework05.vkapi import config, session
-from homework05.vkapi.exceptions import APIError
+from vkapi import config, session
+from vkapi.config import VK_CONFIG
+from vkapi.exceptions import APIError
 
-from homework05.vkapi.config import VK_CONFIG
+
 
 QueryParams = tp.Optional[tp.Dict[str, tp.Union[str, int]]]
 
@@ -89,7 +89,6 @@ def get_mutual(
         })
         response = get.json()["response"]
         mutual_friends += response
-        print(mutual_friends)
 
         if i % 2 == 0:
             time.sleep(1)
