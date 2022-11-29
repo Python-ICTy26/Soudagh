@@ -86,7 +86,7 @@ def get_mutual(
                 "order": order,
                 "count": count,
                 "offset": i * 100,
-                "v": v
+                "v": v,
             },
         )
         response = get.json()["response"]

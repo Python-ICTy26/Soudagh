@@ -37,11 +37,7 @@ def get_posts_2500(
 
     post = requests.post(
         url=f"{domainVK}/execute",
-        data={
-            "code": code,
-            "access_token": f"{access_token}",
-            "v": f"{v}"
-        },
+        data={"code": code, "access_token": f"{access_token}", "v": f"{v}"},
     )
     return post.json()["response"]["items"]
 
