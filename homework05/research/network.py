@@ -15,9 +15,9 @@ def ego_network(
     mutual_friends = get_mutual(source_uid=user_id, target_uids=friends)
     edges = []
 
-    for id in mutual_friends:
-        for friend in id["common_friends"]:
-            edges.append((id["id"], friend))
+    for item in mutual_friends:
+        for friend in item["common_friends"]:
+            edges.append((item["id"], friend))
     return edges
 
 

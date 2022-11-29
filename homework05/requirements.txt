@@ -1,5 +1,5 @@
 responses
-requests
+requests==2.28.1
 httpretty
 tqdm
 networkx

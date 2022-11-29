@@ -70,12 +70,12 @@ def get_wall_execute(
     """
 
     offset_count = (count / 2500).__ceil__()
-    response = []
+    response: tp.Dict[str, tp.Any] = []
     for i in range(offset_count):
         response += get_posts_2500(
             owner_id, domain, i * 2500, max_count, max_count, filter, extended, fields
         )
         if i % 2 == 0:
             time.sleep(1)
-
+    print(response)
     return json_normalize(response)

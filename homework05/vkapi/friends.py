@@ -32,7 +32,6 @@ def get_friends(
     domain = VK_CONFIG["domain"]
     access_token = VK_CONFIG["access_token"]
     v = VK_CONFIG["version"]
-    fields = "sex"
 
     get = requests.get(
         f"{domain}/friends.get",
