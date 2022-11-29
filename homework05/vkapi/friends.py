@@ -13,7 +13,7 @@ QueryParams = tp.Optional[tp.Dict[str, tp.Union[str, int]]]
 @dataclasses.dataclass(frozen=True)
 class FriendsResponse:
     count: int
-    items: tp.Union[tp.List[int], tp.List[tp.Dict[str, tp.Any]]]
+    items: tp.List[tp.Dict[str, tp.Any]]
 
 
 def get_friends(
