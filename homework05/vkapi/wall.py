@@ -73,7 +73,7 @@ def get_wall_execute(
     response = []
     for i in range(offset_count):
         response += get_posts_2500(
-            owner_id, domain, i * 2500, max_count, filter, extended, fields, progress
+            owner_id, domain, i * 2500, max_count, max_count, filter, extended, fields
         )
         if i % 2 == 0:
             time.sleep(1)
