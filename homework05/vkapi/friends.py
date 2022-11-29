@@ -61,7 +61,7 @@ def get_mutual(
     count: tp.Optional[int] = None,
     offset: int = 0,
     progress=None,
-) -> tp.Union[tp.List[int], tp.List[MutualFriends]]:
+) -> tp.List[MutualFriends]:
 
     domain = VK_CONFIG["domain"]
     access_token = VK_CONFIG["access_token"]
