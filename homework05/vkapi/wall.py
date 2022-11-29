@@ -71,7 +71,7 @@ def get_wall_execute(
     """
 
     offset_count = (count / 2500).__ceil__()
-    response: tp.List[str, tp.Any] = []
+    response: tp.List[str] = []
     for i in range(offset_count):
         posts = get_posts_2500(
             owner_id, domain, i * 2500, max_count, max_count, filter, extended, fields
