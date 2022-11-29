@@ -38,6 +38,8 @@ def get_friends(
         params={
             "access_token": access_token,
             "user_id": user_id,
+            "count": count,
+            "offset": offset,
             "fields": fields,
             "v": v,
         },
