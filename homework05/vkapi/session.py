@@ -1,4 +1,3 @@
-
 import time
 import typing as tp
 
@@ -16,11 +15,11 @@ class Session:
     """
 
     def __init__(
-            self,
-            base_url: str,
-            timeout: float = 5.0,
-            max_retries: int = 3,
-            backoff_factor: float = 0.3,
+        self,
+        base_url: str,
+        timeout: float = 5.0,
+        max_retries: int = 3,
+        backoff_factor: float = 0.3,
     ) -> None:
         self.base_url = base_url
         self.timeout = timeout
@@ -48,7 +47,7 @@ class Session:
 
                 if count == self.max_retries:
                     raise requests.exceptions.RetryError
-                sleep = (self.backoff_factor * (2 ** count)).__round__()
+                sleep = (self.backoff_factor * (2**count)).__round__()
                 time.sleep(sleep)
                 count += 1
 

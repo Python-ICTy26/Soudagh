@@ -15,16 +15,16 @@ v = config.VK_CONFIG["version"]
 
 
 def get_posts_2500(
-        owner_id: str = "",
-        domain: str = "",
-        offset: int = 0,
-        count: int = 10,
-        max_count: int = 2500,
-        filter: str = "owner",
-        extended: int = 0,
-        fields: tp.Optional[tp.List[str]] = None,
+    owner_id: str = "",
+    domain: str = "",
+    offset: int = 0,
+    count: int = 10,
+    max_count: int = 2500,
+    filter: str = "owner",
+    extended: int = 0,
+    fields: tp.Optional[tp.List[str]] = None,
 ) -> tp.Dict[str, tp.Any]:
-    code = '''return API.wall.get({
+    code = """return API.wall.get({
                 '"owner_id": "owner_id"',
                 '"domain": "domain"',
                 '"offset": offset',
@@ -33,26 +33,29 @@ def get_posts_2500(
                 '"extended": extended',
                 '"fields": "fields"',
                 '"v": "v"'
-                });'''
+                });"""
 
-    post = requests.post(url=f"{domainVK}/execute", data={
-        "code": code,
-        "access_token": f"{access_token}",
-        "v": f"{v}"
-    })
+    post = requests.post(
+        url=f"{domainVK}/execute",
+        data={
+            "code": code,
+            "access_token": f"{access_token}",
+            "v": f"{v}"
+        },
+    )
     return post.json()["response"]["items"]
 
 
 def get_wall_execute(
-        owner_id: str = "",
-        domain: str = "",
-        offset: int = 0,
-        count: int = 10,
-        max_count: int = 2500,
-        filter: str = "owner",
-        extended: int = 0,
-        fields: tp.Optional[tp.List[str]] = None,
-        progress=None,
+    owner_id: str = "",
+    domain: str = "",
+    offset: int = 0,
+    count: int = 10,
+    max_count: int = 2500,
+    filter: str = "owner",
+    extended: int = 0,
+    fields: tp.Optional[tp.List[str]] = None,
+    progress=None,
 ) -> pd.DataFrame:
     """
     Возвращает список записей со стены пользователя или сообщества.
@@ -73,7 +76,9 @@ def get_wall_execute(
     offset_count = (count / 2500).__ceil__()
     response = []
     for i in range(offset_count):
-        response += (get_posts_2500(owner_id, domain, i * 2500, max_count, filter, extended, fields, progress))
+        response += get_posts_2500(
+            owner_id, domain, i * 2500, max_count, filter, extended, fields, progress
+        )
         if i % 2 == 0:
             time.sleep(1)
 

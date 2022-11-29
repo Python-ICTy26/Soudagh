@@ -17,7 +17,7 @@ class FriendsResponse:
 
 
 def get_friends(
-        user_id: int, count: int = 5000, offset: int = 0, fields: tp.Optional[tp.List[str]] = None
+    user_id: int, count: int = 5000, offset: int = 0, fields: tp.Optional[tp.List[str]] = None
 ) -> FriendsResponse:
     """
     Получить список идентификаторов друзей пользователя или расширенную информацию
@@ -32,15 +32,17 @@ def get_friends(
     domain = VK_CONFIG["domain"]
     access_token = VK_CONFIG["access_token"]
     v = VK_CONFIG["version"]
-    fields = 'sex'
+    fields = "sex"
 
-    get = requests.get(f"{domain}/friends.get", params={
-        "access_token": access_token,
-        "user_id": user_id,
-        "fields": fields,
-        "v": v,
-
-    })
+    get = requests.get(
+        f"{domain}/friends.get",
+        params={
+            "access_token": access_token,
+            "user_id": user_id,
+            "fields": fields,
+            "v": v,
+        },
+    )
 
     response = get.json()["response"]
     return FriendsResponse(count=response["count"], items=response["items"])
@@ -53,13 +55,13 @@ class MutualFriends(tp.TypedDict):
 
 
 def get_mutual(
-        source_uid: tp.Optional[int] = None,
-        target_uid: tp.Optional[int] = None,
-        target_uids: tp.Optional[tp.List[int]] = None,
-        order: str = "",
-        count: tp.Optional[int] = None,
-        offset: int = 0,
-        progress=None,
+    source_uid: tp.Optional[int] = None,
+    target_uid: tp.Optional[int] = None,
+    target_uids: tp.Optional[tp.List[int]] = None,
+    order: str = "",
+    count: tp.Optional[int] = None,
+    offset: int = 0,
+    progress=None,
 ) -> tp.Union[tp.List[int], tp.List[MutualFriends]]:
 
     domain = VK_CONFIG["domain"]
@@ -74,16 +76,19 @@ def get_mutual(
         ln = (len(target_uids) / 100).__ceil__()
 
     for i in range(ln):
-        get = requests.get(f"{domain}/friends.getMutual", params={
-            "access_token": access_token,
-            "source_uid": source_uid,
-            "target_uid": target_uid,
-            "target_uids": target_uids,
-            "order": order,
-            "count": count,
-            "offset": i * 100,
-            "v": v
-        })
+        get = requests.get(
+            f"{domain}/friends.getMutual",
+            params={
+                "access_token": access_token,
+                "source_uid": source_uid,
+                "target_uid": target_uid,
+                "target_uids": target_uids,
+                "order": order,
+                "count": count,
+                "offset": i * 100,
+                "v": v
+            },
+        )
         response = get.json()["response"]
         mutual_friends += response
 
