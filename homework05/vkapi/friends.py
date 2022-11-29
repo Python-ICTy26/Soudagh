@@ -3,12 +3,9 @@ import time
 import typing as tp
 
 import requests
-
 from vkapi import config, session
 from vkapi.config import VK_CONFIG
 from vkapi.exceptions import APIError
-
-
 
 QueryParams = tp.Optional[tp.Dict[str, tp.Union[str, int]]]
 
