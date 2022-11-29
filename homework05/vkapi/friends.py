@@ -33,16 +33,14 @@ def get_friends(
     access_token = VK_CONFIG["access_token"]
     v = VK_CONFIG["version"]
 
-    response = requests.get(
-        f"{domain}/friends.get",
-        params={
-            "access_token": access_token,
-            "user_id": user_id,
-            "count": count,
-            "offset": offset,
-            "fields": fields,
-            "v": v,
-        },
+    response = session.get(
+        "friends.get",
+        user_id=user_id,
+        count=count,
+        offset=offset,
+        fields=fields,
+        access_token=access_token,
+        v=v,
     ).json()["response"]
     return FriendsResponse(count=response["count"], items=response["items"])
 
