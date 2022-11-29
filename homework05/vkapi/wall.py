@@ -39,6 +39,7 @@ def get_posts_2500(
         url=f"{domainVK}/execute",
         data={"code": code, "access_token": f"{access_token}", "v": f"{v}"},
     )
+
     return post.json()["response"]["items"]
 
 
@@ -70,12 +71,12 @@ def get_wall_execute(
     """
 
     offset_count = (count / 2500).__ceil__()
-    response: tp.Dict[str, tp.Any] = []
+    response = []
     for i in range(offset_count):
-        response += get_posts_2500(
+        posts = get_posts_2500(
             owner_id, domain, i * 2500, max_count, max_count, filter, extended, fields
         )
+        response += posts
         if i % 2 == 0:
             time.sleep(1)
-    print(response)
     return json_normalize(response)

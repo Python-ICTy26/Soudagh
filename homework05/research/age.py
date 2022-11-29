@@ -8,6 +8,7 @@ from vkapi.friends import get_friends
 def age_predict(user_id: int) -> tp.Optional[float]:
 
     friends_response = get_friends(user_id).items
+    print(friends_response)
     friends_age = []
     year = dt.datetime.now().year
     for friend in friends_response:
