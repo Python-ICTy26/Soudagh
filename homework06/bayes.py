@@ -1,4 +1,5 @@
-import collections, math
+import collections
+import math
 
 
 class NaiveBayesClassifier:

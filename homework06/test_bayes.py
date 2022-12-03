@@ -1,6 +1,7 @@
 import csv
-import bayes
 import string
+
+import bayes
 
 
 def clean(s):
