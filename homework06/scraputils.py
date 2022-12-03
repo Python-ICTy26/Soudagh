@@ -1,4 +1,5 @@
 import requests
+
 from bs4 import BeautifulSoup
 
 
@@ -33,6 +34,8 @@ def extract_next_page(parser):
     """ Extract next page URL """
 
     link_tag = parser.body.findAll("table")[2].findAll("tr")[-1].a
+    if link_tag is None:
+        return None
     return link_tag.get("href")
 
 
@@ -45,6 +48,10 @@ def get_news(url, n_pages=1):
         soup = BeautifulSoup(response.text, "html.parser")
         news_list = extract_news(soup)
         next_page = extract_next_page(soup)
+
+        if next_page is None:
+            return news
+
         url = "https://news.ycombinator.com/" + next_page
         news.extend(news_list)
         n_pages -= 1
