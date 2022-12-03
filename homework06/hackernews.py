@@ -29,7 +29,9 @@ def update_news():
         for new in news:
             print(new)
             if len(new.keys()) == 5 and not len(
-                session.query(News).filter(News.author == new["author"], News.title == new["title"]).all()
+                session.query(News)
+                .filter(News.author == new["author"], News.title == new["title"])
+                .all()
             ):
                 session.add(
                     News(
