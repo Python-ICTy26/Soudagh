@@ -3,7 +3,6 @@ import math
 
 
 class NaiveBayesClassifier:
-
     def __init__(self, alpha=1):
         self.alpha = alpha
         self.classes = []
@@ -43,7 +42,7 @@ class NaiveBayesClassifier:
             self.count_words[key] = sum(self.counters[key].values())
 
     def predict(self, X):
-        """ Perform classification on an array of test vectors X. """
+        """Perform classification on an array of test vectors X."""
         predicts = []
         for msg in X:
             words = msg.split(" ")
@@ -55,19 +54,22 @@ class NaiveBayesClassifier:
                 if word in self.X_set:
                     for key in self.classes:
                         words_p[key].append(
-                            (self.counters[key][word] + self.alpha) / (self.count_words[key] + self.d * self.alpha)
+                            (self.counters[key][word] + self.alpha)
+                            / (self.count_words[key] + self.d * self.alpha)
                         )
                 else:
                     for key in self.classes:
                         words_p[key].append(0)
             keys_res = dict()
             for key in self.classes:
-                keys_res[key] = math.log(self.classes_p[key]) + sum([math.log(x) for x in words_p[key] if x > 0])
+                keys_res[key] = math.log(self.classes_p[key]) + sum(
+                    [math.log(x) for x in words_p[key] if x > 0]
+                )
 
             with open("temp", "w") as f:
                 for v in keys_res.values():
-                    f.write(str(v) + '\n')
-                f.write('\n')
+                    f.write(str(v) + "\n")
+                f.write("\n")
                 for key in self.classes:
                     f.write(key)
 
@@ -83,7 +85,7 @@ class NaiveBayesClassifier:
         return predicts
 
     def score(self, X_test, y_test):
-        """ Returns the mean accuracy on the given test data and labels. """
+        """Returns the mean accuracy on the given test data and labels."""
         v_len = len(X_test)
         predicts = self.predict(X_test)
         same_results = 0

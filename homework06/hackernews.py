@@ -1,6 +1,7 @@
 from bayes import NaiveBayesClassifier
 from bottle import redirect, request, route, run, template
 from db import News, session
+from homework06.scraputils import get_news
 
 
 @route("/")
@@ -30,13 +31,15 @@ def update_news():
         if len(new.keys()) == 5 and not len(
                 s.query(News).filter(News.author == new["author"], News.title == new["title"]).all()
         ):
-            s.add(News(
-                author=new["author"],
-                title=new["title"],
-                points=new["points"],
-                comments=new["comments"],
-                url=new["url"]
-            ))
+            s.add(
+                News(
+                    author=new["author"],
+                    title=new["title"],
+                    points=new["points"],
+                    comments=new["comments"],
+                    url=new["url"]
+                )
+            )
         s.commit()
     redirect("/news")
 
@@ -58,9 +61,7 @@ def classify_news():
     news = [new.title for new in news]
     predicts = model.predict(news)
 
-    classified_news = {"good": [],
-                       "maybe": [],
-                       "never": []}
+    classified_news = {"good": [], "maybe": [], "never": []}
 
     for i, predict in enumerate(predicts):
         classified_news[predict].append(news_ids[i])
@@ -68,9 +69,7 @@ def classify_news():
     rows = []
     for label in ["good", "maybe", "never"]:
         for id in classified_news[label]:
-            rows.append(
-                s.query(News).filter(News.id == id).first()
-            )
+            rows.append(s.query(News).filter(News.id == id).first())
     return template("classification_template", rows=rows)
 
 
