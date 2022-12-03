@@ -4,10 +4,10 @@ from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
 engine = create_engine("sqlite:///news.db")
-session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=engine)
 
 
-class News(Base):
+class News(Base):  # type: ignore
     __tablename__ = "news"
     id = Column(Integer, primary_key=True)
     title = Column(String)
