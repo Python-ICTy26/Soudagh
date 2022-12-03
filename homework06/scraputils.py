@@ -15,14 +15,15 @@ def extract_news(parser):
             news_list[-1]["url"] = tr.findAll("td")[-1].a.get("href")
         if i % 3 == 1:
             if len(tr.findAll("td")[1].findAll("span")) == 3:
-                news_list[-1]["author"] = tr.findAll("td")[1].findAll(
-                    "a"
-                )[0].text
+                news_list[-1]["author"] = tr.findAll("td")[1].findAll("a")[0].text
                 points_str = tr.findAll("td")[1].findAll("span")[0].text
-                news_list[-1]["points"] = int(points_str[:points_str.find("point") - 1])
+                news_list[-1]["points"] = int(points_str[: points_str.find("point") - 1])
                 comments_str = tr.findAll("td")[1].findAll("a")[-1].text
+
                 if "comment" in comments_str:
-                    news_list[-1]["comments"] = int(comments_str[:comments_str.find("comment") - 1])
+                    news_list[-1]["comments"] = int(
+                        comments_str[: comments_str.find("comment") - 1]
+                    )
                 else:
                     news_list[-1]["comments"] = 0
 

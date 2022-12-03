@@ -30,7 +30,7 @@ def update_news():
     for new in news:
         print(new)
         if len(new.keys()) == 5 and not len(
-                s.query(News).filter(News.author == new["author"], News.title == new["title"]).all()
+            s.query(News).filter(News.author == new["author"], News.title == new["title"]).all()
         ):
             s.add(
                 News(
@@ -38,7 +38,7 @@ def update_news():
                     title=new["title"],
                     points=new["points"],
                     comments=new["comments"],
-                    url=new["url"]
+                    url=new["url"],
                 )
             )
         s.commit()
