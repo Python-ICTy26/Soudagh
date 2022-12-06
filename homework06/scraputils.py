@@ -19,9 +19,7 @@ def extract_news(parser):
             comments_str = tr.findAll("td")[1].findAll("a")[-1].text
 
             if "comment" in comments_str:
-                news_list[-1]["comments"] = int(
-                    comments_str[: comments_str.find("comment") - 1]
-                )
+                news_list[-1]["comments"] = int(comments_str[: comments_str.find("comment") - 1])
             else:
                 news_list[-1]["comments"] = 0
     return news_list
