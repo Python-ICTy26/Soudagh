@@ -8,12 +8,11 @@ from scraputils import get_news
 @route("/news")
 def news_list():
     with Session.begin() as session:
-        rows = session.query(News).filter(News.label is None).all()
+        rows = session.query(News).filter(News.label == None).all()
+        return template('news_template', rows=rows)
 
-    return template("news_template", rows=rows)
 
-
-@route("/add_label/")
+@route("/add_label")
 def add_label():
     with Session.begin() as session:
         row = session.query(News).filter(News.id == request.query.id).first()
@@ -22,16 +21,15 @@ def add_label():
     redirect("/news")
 
 
-@route("/update")
+@route("/update_news")
 def update_news():
     news = get_news("https://news.ycombinator.com/newest")
     with Session.begin() as session:
         for new in news:
-            print(new)
             if len(new.keys()) == 5 and not len(
-                session.query(News)
-                .filter(News.author == new["author"], News.title == new["title"])
-                .all()
+                    session.query(News)
+                            .filter(News.author == new["author"], News.title == new["title"])
+                            .all()
             ):
                 session.add(
                     News(
@@ -42,7 +40,7 @@ def update_news():
                         url=new["url"],
                     )
                 )
-            session.commit()
+        session.commit()
     redirect("/news")
 
 
