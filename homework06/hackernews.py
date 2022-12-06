@@ -9,6 +9,7 @@ from scraputils import get_news
 def news_list():
     with Session.begin() as session:
         rows = session.query(News).filter(News.label == None).all()
+
         return template('news_template', rows=rows)
 
 
@@ -28,8 +29,8 @@ def update_news():
         for new in news:
             if len(new.keys()) == 5 and not len(
                     session.query(News)
-                            .filter(News.author == new["author"], News.title == new["title"])
-                            .all()
+                    .filter(News.author == new["author"], News.title == new["title"])
+                    .all()
             ):
                 session.add(
                     News(
