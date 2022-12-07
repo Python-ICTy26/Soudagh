@@ -65,7 +65,7 @@ def read_index(gitdir: pathlib.Path) -> tp.List[GitIndexEntry]:
 
     count = int.from_bytes(data[8:12], "big")
     pointer = b"\x00\x00\x00"
-    content = data[12:-20]
+    content = data[12:]
     counter = 0
     for i in range(count):
         name_len_start = counter + 62
