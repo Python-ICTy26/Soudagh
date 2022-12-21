@@ -1,8 +1,7 @@
+import time
 import typing as tp
 
 import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
 
 
 class Session:
@@ -22,10 +21,38 @@ class Session:
         max_retries: int = 3,
         backoff_factor: float = 0.3,
     ) -> None:
-        pass
+        self.base_url = base_url
+        self.timeout = timeout
+        self.max_retries = max_retries
+        self.backoff_factor = backoff_factor
 
     def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        pass
+        return self.check(url, "get")
 
     def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        pass
+        return self.check(url, "post")
+
+    def check(self, url: str, method: str):
+        count = 0
+        while True:
+            try:
+                response = getattr(requests, method)(f"{self.base_url}/{url}", timeout=self.timeout)
+                response.raise_for_status()
+
+                return response
+
+            except requests.exceptions.HTTPError:
+                if self.max_retries == 1:
+                    raise requests.exceptions.HTTPError
+
+                if count == self.max_retries:
+                    raise requests.exceptions.RetryError
+                sleep = (self.backoff_factor * (2**count)).__round__()
+                time.sleep(sleep)
+                count += 1
+
+            except requests.exceptions.ConnectionError:
+                raise requests.exceptions.ConnectionError
+
+            except requests.exceptions.ReadTimeout:
+                raise requests.exceptions.ReadTimeout
